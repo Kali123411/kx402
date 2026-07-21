@@ -1,0 +1,53 @@
+{
+  "name": "kx402",
+  "version": "0.1.0",
+  "description": "Kaspa x402 agent payer — SDK, CLI, and MCP server for paying x402 v2 services on Kaspa.",
+  "type": "module",
+  "main": "./src/wallet.mjs",
+  "exports": {
+    ".": "./src/wallet.mjs",
+    "./wallet": "./src/wallet.mjs"
+  },
+  "bin": {
+    "kx402": "src/kx402.mjs",
+    "kx402-mcp": "src/mcp.mjs"
+  },
+  "files": [
+    "src",
+    "scripts",
+    ".env.example"
+  ],
+  "scripts": {
+    "fetch-sdk": "bash scripts/fetch-wasm-sdk.sh",
+    "help": "node src/kx402.mjs help"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@kaspa-x402/client": "0.1.0-alpha.9",
+    "@kaspa-x402/core": "0.1.0-alpha.9",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@noble/curves": "^2.2.0",
+    "@noble/hashes": "^2.2.0",
+    "websocket": "^1.0.35",
+    "zod": "^3.23.0"
+  },
+  "keywords": [
+    "kaspa",
+    "x402",
+    "kaspa-x402",
+    "agent",
+    "payments",
+    "mcp",
+    "ai-agents",
+    "micropayments"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kali123411/kx402.git"
+  },
+  "homepage": "https://kaspa-402.org",
+  "author": "Kali123411",
+  "license": "MIT"
+}

@@ -1,7 +1,8 @@
 {
   "name": "kx402",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Kaspa x402 agent payer — SDK, CLI, and MCP server for paying x402 v2 services on Kaspa.",
+  "mcpName": "io.github.Kali123411/kx402",
   "type": "module",
   "main": "./src/wallet.mjs",
   "exports": {

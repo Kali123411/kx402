@@ -56,13 +56,14 @@ Every payment is bounded by a `fundingPolicy` derived from the offer itself — 
 
 ## MCP server
 
-Run `kx402-mcp` (stdio). It exposes `kaspa_x402_address`, `kaspa_x402_balance`, `kaspa_x402_offer`, and `kaspa_x402_pay` (which spends real funds, bounded by `max_sompi`). Example client config:
+Run `kx402 mcp` (or the `kx402-mcp` bin) — a stdio server exposing `kaspa_x402_address`, `kaspa_x402_balance`, `kaspa_x402_offer`, and `kaspa_x402_pay` (which spends real funds, bounded by `max_sompi`). Example client config:
 
 ```json
 {
   "mcpServers": {
     "kx402": {
-      "command": "kx402-mcp",
+      "command": "npx",
+      "args": ["-y", "kx402", "mcp"],
       "env": {
         "KASPA_X402_KASPA_WASM_MODULE": "/abs/path/vendor/kaspa-wasm32-sdk/nodejs/kaspa/kaspa.js",
         "KASPA_X402_FUNDING_WALLET": "wallet-key:/abs/path/wallet.key",

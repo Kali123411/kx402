@@ -43,12 +43,22 @@ const HELP = `kx402 — Kaspa x402 wallet-agent
   kx402 balance                       show spendable balance
   kx402 offer  <url>                  fetch a 402 and print its terms (no payment)
   kx402 pay    <url> [--text "..."]   pay the offer and print the result
+  kx402 mcp                           run the MCP server (stdio) for agent clients
 
 flags: --config-file <env>  --max <sompi>  --json  --wasm <path>  --rpc <url>  --wallet <spec>  --network <id>`;
 
 async function main() {
   const { command, positional, flags } = parseArgs(process.argv.slice(2));
   if (!command || command === "help" || flags.help) { console.log(HELP); return; }
+  if (command === "mcp") {
+    // Launch the MCP server (stdio). Fold an optional --config-file into the env it reads.
+    if (flags["config-file"]) {
+      const { loadEnvFile } = await import("./wallet.mjs");
+      for (const [k, v] of Object.entries(loadEnvFile(flags["config-file"]))) if (process.env[k] === undefined) process.env[k] = v;
+    }
+    await import("./mcp.mjs");
+    return;
+  }
   const cfg = cfgFromFlags(flags);
   const asJson = !!flags.json;
 

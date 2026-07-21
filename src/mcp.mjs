@@ -18,6 +18,10 @@ import { z } from "zod";
 
 import { openWallet, payExact, readOffer, resolveWalletConfig, applyInput, kas } from "./wallet.mjs";
 
+// MCP speaks JSON-RPC over stdout — redirect any stray library/WASM logging to stderr so it can't
+// corrupt the protocol stream. (The transport writes to stdout directly, not via console.log.)
+console.log = (...a) => console.error(...a);
+
 // Open the funded wallet once and reuse it across tool calls; reset on failure so the next call retries.
 let walletPromise;
 function getWallet() {

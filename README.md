@@ -10,6 +10,19 @@ It speaks the **x402 v2 exact / `standard-native`** flow against the [`@kaspa-x4
 
 > ⚠️ Alpha, and `pay` spends real funds. Use testnet-10 first. Keep funding keys in `0600` files, never in git.
 
+## What it solves
+
+The internet's payment plumbing assumes a *person* is buying: you sign up, get an API key, put a card on file, click "approve." An AI agent can't do any of that — and you don't want to hand it your credit card. So agents can reason and act, but the moment a task needs a paid tool (data, compute, a model, an API), a human has to set up the billing first.
+
+kx402 closes that gap. It gives an agent a wallet it can actually operate, and lets it pay per use on its own:
+
+- **No account, no API key, no signup.** The agent pays the exact price for each call on the spot; it needs no relationship with the service.
+- **Micropayments cards can't do.** Credit cards have a ~30¢ floor. Settling in KAS on Kaspa makes fractions-of-a-cent, per-call payments practical.
+- **A wallet built for software, not fingers.** It builds, signs, sends, and proves a payment programmatically in about a second, with no human in the loop.
+- **Guardrails so it can't run wild.** Every payment is capped at the offer's own price, paid only to that service, up to a limit you set — autonomy without the risk of overspending or paying the wrong party.
+
+Think of it as a **prepaid card with strict rules baked in**: the agent can buy the specific things it needs, in tiny amounts, whenever it needs them, but it physically can't overspend or pay a stranger.
+
 ## Install
 
 ```bash
@@ -82,10 +95,6 @@ On mainnet, kx402 uses **non-hosted settlement**: it broadcasts the signed tx it
 
 - [`@kaspa-x402`](https://github.com/elldeeone/kaspa-x402) — the Kaspa x402 binding this builds on.
 - [kaspa-402.org](https://kaspa-402.org) — the marketplace of x402-payable services on Kaspa.
-
-## Releasing
-
-Publishing is automated via npm **Trusted Publishing** (OIDC) from GitHub Actions — no token, no OTP. To cut a release: bump `version` in `package.json`, commit, then `git tag vX.Y.Z && git push origin vX.Y.Z`. The tag push runs `.github/workflows/publish.yml`, which verifies the tag matches `package.json` and publishes with provenance. (One-time: configure the Trusted Publisher for `kx402` in the npm package settings.)
 
 ## License
 

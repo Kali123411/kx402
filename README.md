@@ -82,6 +82,10 @@ On mainnet, kx402 uses **non-hosted settlement**: it broadcasts the signed tx it
 - [`@kaspa-x402`](https://github.com/elldeeone/kaspa-x402) — the Kaspa x402 binding this builds on.
 - [kaspa-402.org](https://kaspa-402.org) — the marketplace of x402-payable services on Kaspa.
 
+## Releasing
+
+Publishing is automated via npm **Trusted Publishing** (OIDC) from GitHub Actions — no token, no OTP. To cut a release: bump `version` in `package.json`, commit, then `git tag vX.Y.Z && git push origin vX.Y.Z`. The tag push runs `.github/workflows/publish.yml`, which verifies the tag matches `package.json` and publishes with provenance. (One-time: configure the Trusted Publisher for `kx402` in the npm package settings.)
+
 ## License
 
 MIT

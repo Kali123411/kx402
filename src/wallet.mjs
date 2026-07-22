@@ -238,9 +238,11 @@ export async function payExact(wallet, url, { maxAmountSompi, dry } = {}) {
 
   // Non-hosted mainnet: broadcast the signed tx ourselves and wait for on-chain acceptance, so the
   // gateway settles by observing it on-chain (the gateway never needs to broadcast → no gateway wRPC).
+  let broadcastTxid = null;
   if (wallet.broadcast) {
     const tx = wallet.sdk.Transaction.deserializeFromSafeJSON(payment.paymentPayload.payload.transaction);
     const txid = String(tx.id);
+    broadcastTxid = txid;
     await wallet.rpc.submitTransaction({ transaction: tx });
     await waitForAcceptance(wallet.chainApiBase, txid, 150_000);
     if (process.env.KX402_DIAG) await diagCompare(wallet.chainApiBase, txid, JSON.parse(payment.paymentPayload.payload.transaction));
@@ -252,7 +254,7 @@ export async function payExact(wallet, url, { maxAmountSompi, dry } = {}) {
   const text = await res.text();
   let body; try { body = JSON.parse(text); } catch { body = text; }
 
-  const result = { offer, status: res.status, body };
+  const result = { offer, status: res.status, body, txid: broadcastTxid };
   const settleHeader = res.headers.get(PAYMENT_RESPONSE_HEADER);
   if (res.status >= 200 && res.status < 300 && settleHeader) {
     const settlement = decodePaymentResponseHeader(settleHeader);
